@@ -71,9 +71,6 @@ const AppProvider = ({children}) =>{
   useEffect(()=>{
     getArtist()
   },[])
-  useEffect(()=>{
-    console.log(artist)
-  },[artist])
 
   return <AppContext.Provider value= {{artist,setArtist,genres,setGenres}}>
     {children}
