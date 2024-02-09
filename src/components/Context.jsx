@@ -4,9 +4,13 @@ import {Buffer} from 'buffer'
 import qs from 'qs'
 
 const AppContext = React.createContext()
+let id = '3TVXtAsR1Inumwj472S9r4'
+let id2 = '4q3ewBCX7sLwd24euuV69X'
+
 const AppProvider = ({children}) =>{
-  const [genres,setGenres] = useState()
+  const [album,setAlbum] = useState()
   const [artist,setArtist] = useState()
+  const [top_tracks,setTop_Tracks] = useState()
 
   const clientId = process.env.REACT_APP_SPOTIFY_API_ID;
   const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
@@ -24,18 +28,15 @@ const AppProvider = ({children}) =>{
           'Content-Type': 'application/x-www-form-urlencoded' 
         }
       })
-      //return access token
       return response.data.access_token;
-      //console.log(response.data.access_token);   
     }catch(error){
-      //on fail, log the error in console
       console.log(error);
     }
   }
 
-  const getGenre = async () => {
+  const getArtist_Albums = async () => {
     const access_token = await getAuth()
-    const api_url = 'https://api.spotify.com/v1/recommendations/available-genre-seeds';
+    const api_url = `https://api.spotify.com/v1/artists/${id}/albums`;
 
     try{
       const response = await axios.get(api_url, {
@@ -43,16 +44,30 @@ const AppProvider = ({children}) =>{
           'Authorization': `Bearer ${access_token}`,
         }
       })
-      setGenres(response.data.genres)
-      return response.data
+      setAlbum(response.data)
       }catch(error){
         console.log(error)
       }
   }
 
-  const getArtist = async () => {
+  const getArtist_TopTracks = async () => {
     const access_token = await getAuth()
-    let id = '3TVXtAsR1Inumwj472S9r4'
+    const api_url = `https://api.spotify.com/v1/artists/${id}/top-tracks`;
+
+    try{
+      const response = await axios.get(api_url, {
+        headers: { 
+          'Authorization': `Bearer ${access_token}`,
+        }
+      })
+      setTop_Tracks(response.data)
+      }catch(error){
+        console.log(error)
+      }
+  }
+
+  const getArtist = async (id) => {
+    const access_token = await getAuth()
     const api_url = `https://api.spotify.com/v1/artists/${id}`;
 
     try{
@@ -62,17 +77,16 @@ const AppProvider = ({children}) =>{
         }
       })
       setArtist(response.data)
-      return response.data
       }catch(error){
         console.log(error)
       }
   }
   
   useEffect(()=>{
-    getArtist()
+    getArtist(id2)
   },[])
 
-  return <AppContext.Provider value= {{artist,setArtist,genres,setGenres}}>
+  return <AppContext.Provider value= {{artist,setArtist}}>
     {children}
   </AppContext.Provider>
 }

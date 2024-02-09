@@ -1,6 +1,6 @@
 import React from 'react'
-import {useGlobalContext} from '../Context'
-import { AppContext } from '../Context'
+import {useGlobalContext} from './Context'
+import { AppContext } from './Context'
 
 function Body() {
   const {artist,setArtist} = useGlobalContext()
