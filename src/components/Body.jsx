@@ -1,18 +1,21 @@
 import React from 'react'
 import {useGlobalContext} from './Context'
 import { AppContext } from './Context'
+import MainPage from './mainpage'
+import Navbar from './Navbar'
 
-function Body() {
+const Body = () => {
   const {artist,setArtist} = useGlobalContext()
-  if(artist != undefined){
+  if(artist !== undefined){
     console.log(artist)
     return (
-      <div>
-        <h1>Test</h1>
+      <>
+        <Navbar/>
+        <MainPage/>
         <img src={artist.images[2].url} alt="" />
         <div>{artist.name}</div>
         <div>{artist.followers.total}</div>
-      </div>
+      </>
     )
   }
 }
