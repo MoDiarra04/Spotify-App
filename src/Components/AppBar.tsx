@@ -15,6 +15,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import StickyFooter from "./Footer";
 import MainPage from "./MainPage";
 import Impressum from "./Impessum";
+import ArtistComponent from "./ArtistComponent";
 
 import spotifyLogo from'./spotifyLogo.jpg';
 
@@ -169,6 +170,7 @@ function ResponsiveAppBar() {
           <Routes>
             <Route index element={<MainPage />} />
             <Route path="/"  element={<MainPage />} />
+            <Route path="/artist/:id" element={<ArtistComponent />} />
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/top100" element={<Impressum />} />
           </Routes>
