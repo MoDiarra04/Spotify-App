@@ -1,40 +1,32 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Button, IconButton } from "@mui/material";
-import "../App.css";
+import { Autocomplete, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import QuestionBox from "./QuestionBox";
 import Reviews from "./Reviews";
-import { TextField } from "@mui/material";
-import { InputAdornment } from "@mui/material";
 import Steps from "./Steps";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import "../App.css";
+
+const artistDataExample = ["Taylor Swift", "Shawn Mendez", "Dua Lipa", "Eminem"]
 
 export default function MainPage() {
   const navigate = useNavigate();
 
-  const [ description, setDescription ] = useState<string>("");
+  const [search, setSearch] = useState<string | null>(null);
 
-  // const onSubmit = () => {
-  //   setLoading(true);
-  //   generateResponse(
-  //     "Schreibe mir eine Stellenanzeige für einen" + stellenbezeichnung
-  //   ).then((res) => {
-  //     setLoading(false);
-  //     if (res === "Internal server error") {
-  //       setResponse(res);
-  //       return;
-  //     } else {
-  //       setResponse(res.content);
-  //       console.log(res);
-  //     }
-  //   });
-  // };
+  const fetchNewArtist = (search: string | null) => {
+    if (!search)
+      return;
+    //TODO: implement this
+  }
 
   const onSubmit = () => {
-     if (description)
-      navigate("/generate");
+    console.log(search)
+    if (search)
+      navigate("/artist/" + search);
   };
 
   return (
@@ -54,29 +46,33 @@ export default function MainPage() {
         <Typography variant="h3" component="h1" gutterBottom>
           Suche nach einen Künstler
         </Typography>
+
         <Typography variant="h3">
-          <TextField
-            sx={{ pt: 7 }}
+          <Autocomplete
+            disablePortal
             fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            variant="outlined"
-            placeholder="Künstlername"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" color="primary">
-                    <Button
-                      variant="contained"
-                      onClick={() => onSubmit()}
-                      disableElevation
-                    >
-                      Los gehts
-                    </Button>
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            value={search || ""}
+            onChange={(event: any, newValue: string | null) => {setSearch(newValue); fetchNewArtist(newValue);}}
+            id="combo-box-demo"
+            options={artistDataExample}
+            renderInput={(params) => (
+              <>
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Künstlername"
+                />
+                <IconButton edge="end" color="primary">
+                  <Button
+                    variant="contained"
+                    onClick={() => onSubmit()}
+                    disableElevation
+                  >
+                    Los gehts
+                  </Button>
+                </IconButton>
+              </>
+            )}
           />
         </Typography>
       </Container>

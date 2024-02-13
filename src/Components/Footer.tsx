@@ -50,12 +50,12 @@ export default function StickyFooter() {
             >
               <Grid item xs={2}>
               <Link color="inherit" underline="none" href="/Lebenslauf">
-                  Lebenslauf
+                  Künstler mit höchsten Einkommen
                 </Link>
               </Grid>
               <Grid item xs={2}>
               <Link color="inherit" underline="none" href="/Arbeitzeugnis">
-                  Arbeitszeugnis
+                  Top 100 Künstler
                 </Link>
               </Grid>
             </Grid>
