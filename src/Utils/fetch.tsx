@@ -48,8 +48,8 @@ const getAuth = async () => {
   }
 */
 }
-{
-  /*const getArtist_TopTracks = async () => {
+
+export const getArtist_TopTracks = async (id:string) => {
     const access_token = await getAuth()
     const api_url = `https://api.spotify.com/v1/artists/${id}/top-tracks`;
 
@@ -59,13 +59,12 @@ const getAuth = async () => {
           'Authorization': `Bearer ${access_token}`,
         }
       })
-      setTop_Tracks(response.data)
+      return response.data
       }catch(error){
         console.log(error)
       }
   }
-*/
-}
+
 
 export const searchArtistByName = async (input: string) => {
   const access_token = await getAuth();
@@ -82,7 +81,7 @@ export const searchArtistByName = async (input: string) => {
   }
 };
 
-const getArtist = async (id: string) => {
+export const getArtist = async (id: string) => {
   const access_token = await getAuth();
   const api_url = `https://api.spotify.com/v1/artists/${id}`;
   try {
