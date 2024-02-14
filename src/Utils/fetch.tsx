@@ -67,16 +67,16 @@ const getAuth = async () => {
 */
 }
 
-const searchId = async (input: string) => {
+export const searchArtistByName = async (input: string) => {
   const access_token = await getAuth();
-  const api_url = `https://api.spotify.com/v1/search?q=${input}+&type=artist&limit=1`;
+  const api_url = `https://api.spotify.com/v1/search?q=${input}+&type=artist&limit=5`;
   try {
     const response = await axios.get(api_url, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
-    return response.data.artists.items[0].id;
+    return response;
   } catch (error) {
     console.log(error);
   }

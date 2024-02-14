@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, IconButton } from "@mui/material";
 import { Autocomplete, TextField } from "@mui/material";
@@ -9,25 +9,46 @@ import QuestionBox from "./QuestionBox";
 import Reviews from "./Reviews";
 import Steps from "./Steps";
 import "../App.css";
+import { searchArtistByName } from "../Utils/fetch";
 
-const artistDataExample = ["Taylor Swift", "Shawn Mendez", "Dua Lipa", "Eminem"]
+interface searchEntry{
+  name: string,
+  img: string
+}
 
 export default function MainPage() {
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState<string | null>(null);
+  const [search, setSearch] = useState<searchEntry[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  
+  const [artistData, setArtistData] = useState<readonly searchEntry[]>([]);
 
-  const fetchNewArtist = (search: string | null) => {
-    if (!search)
-      return;
-    //TODO: implement this
-  }
+  const [currentID, setCurrentID] = useState<string | null>(null);
 
   const onSubmit = () => {
-    console.log(search)
-    if (search)
-      navigate("/artist/" + search);
+    console.log(currentID)
+    if (currentID)
+      navigate("/artist/" + currentID);
   };
+
+  const searchArtists = ((text: string | null) => {
+    if (!text)
+      return;
+    searchArtistByName(text).then((res: any) => {
+      setCurrentID(res.data.artists.items[0].id);
+      console.log(res);
+
+      let newArtistData: searchEntry[] = [];
+      for (let i = 0; i < 5; i++) {
+        newArtistData.push({
+          name: res.data.artists.items[i].name,
+          img: res.data.artists.items[i].images[0].url,
+        });
+      }
+      setArtistData(newArtistData);
+    });
+  });
 
   return (
     <Box
@@ -51,10 +72,26 @@ export default function MainPage() {
           <Autocomplete
             disablePortal
             fullWidth
-            value={search || ""}
-            onChange={(event: any, newValue: string | null) => {setSearch(newValue); fetchNewArtist(newValue);}}
+            inputValue={inputValue}
+            onInputChange={(event: any, newInputValue: any) => {
+              searchArtists(newInputValue); setInputValue(newInputValue);
+            }}
             id="combo-box-demo"
-            options={artistDataExample}
+            autoHighlight
+            options={artistData}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option) => (
+              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <img
+                  loading="lazy"
+                  width="20"
+                  srcSet={option.img}
+                  src={option.img}
+                  alt=""
+                />
+                {option.name}
+              </Box>
+            )}
             renderInput={(params) => (
               <>
                 <TextField
