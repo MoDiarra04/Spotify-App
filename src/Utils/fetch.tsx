@@ -51,7 +51,7 @@ const getAuth = async () => {
 
 export const getArtist_TopTracks = async (id:string) => {
     const access_token = await getAuth()
-    const api_url = `https://api.spotify.com/v1/artists/${id}/top-tracks`;
+    const api_url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=DE`;
 
     try{
       const response = await axios.get(api_url, {
