@@ -50,12 +50,6 @@ export const ArtistComponent = () => {
     }
   }, [artist])
 
-  useEffect(() => {
-    if (topTrack !== undefined) {
-      console.log(topTrack.tracks)
-    }
-  }, [topTrack])
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -66,7 +60,6 @@ export const ArtistComponent = () => {
       setRow(topTrack.tracks.map((item: any) => {
         return { album: item.album.name, song: item.name }
       }))
-    console.log(row)
   }, [topTrack])
 
   return (
@@ -112,7 +105,7 @@ export const ArtistComponent = () => {
           sx={{
             display: 'inline-block', mx: '2px',
             transform: 'scale(0.6)', backgroundColor: '#242526',
-            color: 'white', padding: '30px 5px 10px 5px',
+            color: 'white', padding: '30px 30px 30px 5px',
             borderRadius: 3, boxShadow: 3
           }}
         >
@@ -134,32 +127,32 @@ export const ArtistComponent = () => {
               {artist ? artist?.popularity : ""}
             </Grid>
             <Grid item xs={4}>
-              <Tooltip title='Albums' placement="left">
+              <Tooltip title='Genre' placement="left">
                 <AlbumIcon sx={{ fontSize: 60 }} />
               </Tooltip>
             </Grid>
             <Grid item xs={8}>
-              {topTrack ? topTrack?.tracks.length : ""}
+              {artist ? artist?.genres[0] : ""}
             </Grid>
           </Grid>
         </Box>
       </Stack>
       <Stack marginTop='50px'
-      justifyContent="center"
-      alignItems="center"
+        justifyContent="center"
+        alignItems="center"
       >
-        <TableContainer component={Paper} sx={{width:'800px'}}>
-          <Table sx={{minWidth:650}} aria-label="simple table">
+        <TableContainer component={Paper} sx={{ width: '800px' }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Album</TableCell>
-                <TableCell align="right">Top-Song</TableCell>
+                <TableCell align="right">Hit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {row.map((item) => (
                 <TableRow
-                  key={item.album}
+                  key={item.song}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
