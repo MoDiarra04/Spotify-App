@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, IconButton } from "@mui/material";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -11,44 +11,44 @@ import Steps from "./Steps";
 import "../App.css";
 import { searchArtistByName } from "../Utils/fetch";
 
-interface searchEntry{
-  name: string,
-  img: string
+interface searchEntry {
+  name: string;
+  img: string;
+  follower: string;
 }
 
 export default function MainPage() {
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState<searchEntry[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
-  
+
   const [artistData, setArtistData] = useState<readonly searchEntry[]>([]);
 
   const [currentID, setCurrentID] = useState<string | null>(null);
 
   const onSubmit = () => {
-    console.log(currentID)
-    if (currentID)
+    if (currentID) 
       navigate("/artist/" + currentID);
   };
 
-  const searchArtists = ((text: string | null) => {
-    if (!text)
-      return;
+  const searchArtists = (text: string | null) => {
+    if (!text) return;
     searchArtistByName(text).then((res: any) => {
       setCurrentID(res.data.artists.items[0].id);
       console.log(res);
 
       let newArtistData: searchEntry[] = [];
       for (let i = 0; i < 5; i++) {
+        let artist = res.data.artists.items[i];
         newArtistData.push({
-          name: res.data.artists.items[i].name,
-          img: res.data.artists.items[i].images[0].url,
+          name: artist.name,
+          img: artist.images[0].url,
+          follower: artist.followers.total,
         });
       }
       setArtistData(newArtistData);
     });
-  });
+  };
 
   return (
     <Box
@@ -74,22 +74,37 @@ export default function MainPage() {
             fullWidth
             inputValue={inputValue}
             onInputChange={(event: any, newInputValue: any) => {
-              searchArtists(newInputValue); setInputValue(newInputValue);
+              searchArtists(newInputValue);
+              setInputValue(newInputValue);
             }}
             id="combo-box-demo"
             autoHighlight
             options={artistData}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option) => (
-              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+              <Box
+                component="li"
+                sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                {...props}
+                width="100%"
+              >
                 <img
                   loading="lazy"
-                  width="20"
+                  width="40"
                   srcSet={option.img}
                   src={option.img}
                   alt=""
                 />
-                {option.name}
+                <Grid container justifyContent="flex-start">
+                  <Typography sx={{ color: "grey" }}>
+                    {option.name}
+                  </Typography>
+                </Grid>
+                <Grid container justifyContent="flex-end">
+                  <Typography sx={{ color: "grey" }}>
+                    Follower: {option.follower}
+                  </Typography>
+                </Grid>
               </Box>
             )}
             renderInput={(params) => (
