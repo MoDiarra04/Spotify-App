@@ -7,10 +7,17 @@ import { Box } from "@mui/system";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AlbumIcon from '@mui/icons-material/Album';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-interface TableType{
+interface TableType {
   album: string,
-  song:string
+  song: string
 }
 
 const style = {
@@ -53,25 +60,25 @@ export const ArtistComponent = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [row,setRow] = useState<Array<TableType>>([])
-  useEffect(()=>{
-    if(topTrack !== undefined)
-    setRow(topTrack.tracks.map((item:any)=>{
-      return {album: item.album.name, song: item.name}
-    }))
+  const [row, setRow] = useState<Array<TableType>>([])
+  useEffect(() => {
+    if (topTrack !== undefined)
+      setRow(topTrack.tracks.map((item: any) => {
+        return { album: item.album.name, song: item.name }
+      }))
     console.log(row)
-  },[topTrack])
-  
+  }, [topTrack])
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h2" textAlign="center">
         {artist ? artist?.name : ""}
       </Typography>
-      <a href={`https://open.spotify.com/search/${artist?artist?.name:""}`}>
-        <img style={{width:'100px'}} 
+      <a href={`https://open.spotify.com/search/${artist ? artist?.name : ""}`}>
+        <img style={{ width: '100px' }}
           src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="" />
       </a>
-      <Stack direction={{xs: 'column', sm: 'row'}}
+      <Stack direction={{ xs: 'column', sm: 'row' }}
         justifyContent="center"
         alignItems="center"
         spacing={2} marginTop='30px'
@@ -137,24 +144,34 @@ export const ArtistComponent = () => {
           </Grid>
         </Box>
       </Stack>
-      {
-        topTrack ? topTrack?.tracks.map((track: any) => { // Hier weiter machen
-          return (
-            <div>
-              <table>
-                <tr>
-                  <th>Album</th>
-                  <th>Top-Track</th>
-                </tr>
-                <tr>
-                  <td>{track ? track?.album.name : ""}</td>
-                  <td>{track ? track?.name : ""}</td>
-                </tr>
-              </table>
-            </div>
-          )
-        }) : ""
-      }
+      <Stack marginTop='50px'
+      justifyContent="center"
+      alignItems="center"
+      >
+        <TableContainer component={Paper} sx={{width:'800px'}}>
+          <Table sx={{minWidth:650}} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Album</TableCell>
+                <TableCell align="right">Top-Song</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {row.map((item) => (
+                <TableRow
+                  key={item.album}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {item.album}
+                  </TableCell>
+                  <TableCell align="right">{item.song}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Stack>
     </Container >
   );
 };
