@@ -96,9 +96,62 @@ export const getArtist = async (id: string) => {
   }
 };
 
-export const fetchArtists = () => {
-  let temp: any = [];
-  getArtist(artist_list[0].id).then((res) => temp.push(res));
-  getArtist(artist_list[1].id).then((res) => temp.push(res));
-  return temp;
+export const fetchArtistMonthlyStreams = async (id: string) => {
+
+  const res = await fetch("https://proxy.cors.sh/https://open.spotify.com/intl-de/artist/" + id, {
+    headers: {
+      "x-cors-api-key": "temp_699d04243205d1ddd0041044ed8ac8c5",
+    },
+  });
+  const text = await res.text();
+
+  const index = text.lastIndexOf("monatliche")
+  const begin = text.slice(0, index).lastIndexOf(">");
+
+  return parseInt(text.slice(begin + 1, index).replaceAll(".", ""))
 };
+
+interface song{
+  name: string,
+  streams: number
+}
+
+export const fetchAristTop5Songs = async (id: string) => {
+  const res = await fetch(
+    "https://proxy.cors.sh/https://open.spotify.com/intl-de/artist/" + id,
+    {
+      headers: {
+        "x-cors-api-key": "temp_699d04243205d1ddd0041044ed8ac8c5",
+      },
+    }
+  );
+  let html = await res.text();
+
+  let data: song[] = [];
+  for (let i = 0; i < 5; i++) {
+    const indexName = html.indexOf('class="ListRowTitle');
+    html = html.slice(indexName);
+
+    let name = html.slice(getHtmlStart(html) + 1, gethtmlEnd(html));
+
+    const indexStreams = html.indexOf("listrow-subtitle-track-spotify:track:");
+    html = html.slice(indexStreams);
+
+    const streams = parseInt(html.slice(getHtmlStart(html) + 1, gethtmlEnd(html)).replaceAll(".", ""));
+
+    data.push({
+      name: name,
+      streams: streams,
+    });
+    html = html.slice(gethtmlEnd(html));
+  }
+  return data;
+};
+
+const getHtmlStart = (html: string) => {
+  return html.indexOf(">")
+}
+
+const gethtmlEnd = (html: string) => {
+  return html.indexOf("<")
+}
