@@ -6,16 +6,6 @@ const clientId = process.env.REACT_APP_SPOTIFY_API_ID;
 const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
 const auth_token = Buffer.from(`${clientId}:${clientSecret}`, "utf-8").toString("base64");
 
-const artist_list = [
-  {
-    id: "4q3ewBCX7sLwd24euuV69X",
-    name: "Bad Bunny",
-  },
-  {
-    id: "06HL4z0CvFAxyc27GXpf02",
-    name: "Taylor Swift",
-  },
-];
 
 const getAuth = async () => {
   const token_url = "https://accounts.spotify.com/api/token";
@@ -130,20 +120,24 @@ export const fetchAristTop5Songs = async (id: string) => {
   let data: song[] = [];
   for (let i = 0; i < 5; i++) {
     const indexName = html.indexOf('class="ListRowTitle');
+    if(indexName === -1)
+      break;
     html = html.slice(indexName);
 
-    let name = html.slice(getHtmlStart(html) + 1, gethtmlEnd(html));
+    let name = html.slice(html.indexOf(">") + 1, html.indexOf("<"));
 
     const indexStreams = html.indexOf("listrow-subtitle-track-spotify:track:");
+    if(indexStreams === -1)
+      break;
     html = html.slice(indexStreams);
 
-    const streams = parseInt(html.slice(getHtmlStart(html) + 1, gethtmlEnd(html)).replaceAll(".", ""));
+    const streams = parseInt(html.slice(html.indexOf(">") + 1, html.indexOf("<")).replaceAll(".", ""));
 
     data.push({
       name: name,
       streams: streams,
     });
-    html = html.slice(gethtmlEnd(html));
+    html = html.slice(html.indexOf("<"));
   }
   return data;
 };
@@ -152,6 +146,6 @@ const getHtmlStart = (html: string) => {
   return html.indexOf(">")
 }
 
-const gethtmlEnd = (html: string) => {
+const getHtmlEnd = (html: string) => {
   return html.indexOf("<")
 }
