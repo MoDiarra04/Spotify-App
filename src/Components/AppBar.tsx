@@ -8,18 +8,21 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { Avatar } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import StickyFooter from "./Footer";
 import MainPage from "./MainPage";
 import Impressum from "./Impessum";
 import ArtistComponent from "./ArtistComponent";
+import PopularAristComponent from "./popularArtistCompnent";
 
-import spotifyLogo from'./spotifyLogo.jpg';
-
-const pages = ["Beliebteste Artists", "Artists mit höchsten Einkommen", "FAQ", "Über uns"];
+const pages = [
+  { name: "Beliebteste Artists", page: "most-popular-artists-100" },
+  { name: "Artists mit höchsten Einkommen", page: "most-popular-artists-100" },
+  { name: "FAQ", page: "most-popular-artists-100" },
+  { name: "Über uns", page: "most-popular-artists-100" },
+];
 
 interface Props {
   children: React.ReactElement;
@@ -39,6 +42,8 @@ function ElevationScroll(props: Props) {
 }
 
 function ResponsiveAppBar() {
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -120,8 +125,16 @@ function ResponsiveAppBar() {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center" color="inherit">{page}</Typography>
+                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                      <Button
+                        onClick={() => {
+                          navigate("/" + page.page);
+                        }}
+                      >
+                        <Typography textAlign="center" color="inherit">
+                          {page.name}
+                        </Typography>
+                      </Button>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -145,11 +158,14 @@ function ResponsiveAppBar() {
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
                   <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.name}
+                    onClick={() => {
+                      navigate("/" + page.page);
+                      handleCloseNavMenu();
+                    }}
                     sx={{ my: 2, mx: 1, display: "block" }}
                   >
-                    {page}
+                    {page.name}
                   </Button>
                 ))}
               </Box>
@@ -166,15 +182,14 @@ function ResponsiveAppBar() {
         </AppBar>
       </ElevationScroll>
       <Box component="main" sx={{ flexGrow: 1, pt: 20, color: "inherit" }}>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<MainPage />} />
-            <Route path="/"  element={<MainPage />} />
-            <Route path="/artist/:id" element={<ArtistComponent />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/top100" element={<Impressum />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route index element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/most-popular-artists-100" element={<PopularAristComponent />} />
+          <Route path="/artist/:id" element={<ArtistComponent />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/top100" element={<Impressum />} />
+        </Routes>
         <StickyFooter />
       </Box>
     </>

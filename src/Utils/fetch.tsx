@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Buffer } from "buffer";
+import { error } from "console";
 import qs from "qs";
 
 const clientId = process.env.REACT_APP_SPOTIFY_API_ID;
@@ -92,10 +93,13 @@ export const fetchArtistMonthlyStreams = async (id: string) => {
     headers: {
       "x-cors-api-key": "temp_699d04243205d1ddd0041044ed8ac8c5",
     },
-  });
+  })
   const text = await res.text();
 
   const index = text.lastIndexOf("monatliche")
+  if (index === -1) {
+    throw new Error("Fehler bei der fetch request")
+  }
   const begin = text.slice(0, index).lastIndexOf(">");
 
   return parseInt(text.slice(begin + 1, index).replaceAll(".", ""))
@@ -141,11 +145,3 @@ export const fetchAristTop5Songs = async (id: string) => {
   }
   return data;
 };
-
-const getHtmlStart = (html: string) => {
-  return html.indexOf(">")
-}
-
-const getHtmlEnd = (html: string) => {
-  return html.indexOf("<")
-}
