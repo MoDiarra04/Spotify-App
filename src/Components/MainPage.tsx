@@ -10,6 +10,7 @@ import Reviews from "./Reviews";
 import Steps from "./Steps";
 import "../App.css";
 import { searchArtistByName } from "../Utils/fetch";
+import { fetchAristTop5Songs } from "../Utils/fetch";
 
 interface searchEntry {
   name: string;
@@ -49,6 +50,10 @@ export default function MainPage() {
       setArtistData(newArtistData);
     });
   };
+
+  fetchAristTop5Songs("7dGJo4pcD2V6oG8kP0tJRR").then((res: any) => {
+    console.log(res)
+  })
 
   return (
     <Box
