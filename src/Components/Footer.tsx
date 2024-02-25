@@ -49,12 +49,12 @@ export default function StickyFooter() {
               color="text.secondary"
             >
               <Grid item xs={2}>
-              <Link color="inherit" underline="none" href="/Lebenslauf">
+              <Link color="inherit" underline="none" href="/most-popular-artists-100">
                   Künstler mit höchsten Einkommen
                 </Link>
               </Grid>
               <Grid item xs={2}>
-              <Link color="inherit" underline="none" href="/Arbeitzeugnis">
+              <Link color="inherit" underline="none" href="/most-popular-artists-100">
                   Top 100 Künstler
                 </Link>
               </Grid>
@@ -99,7 +99,7 @@ export default function StickyFooter() {
               color="text.secondary"
             >
               <Grid item xs={2}>
-                <Link color="inherit" underline="none" href="/faq">
+                <Link color="inherit" underline="none" href="/most-popular-artists-100">
                   FAQ
                 </Link>
               </Grid>
