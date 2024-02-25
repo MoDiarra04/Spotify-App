@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, IconButton } from "@mui/material";
 import { Autocomplete, TextField, Grid } from "@mui/material";
@@ -9,8 +9,7 @@ import QuestionBox from "./QuestionBox";
 import Reviews from "./Reviews";
 import Steps from "./Steps";
 import "../App.css";
-import { searchArtistByName } from "../Utils/fetch";
-import { fetchAristTop5Songs } from "../Utils/fetch";
+import { fetchArtistMonthlyStreams, searchArtistByName } from "../Utils/fetch";
 
 interface searchEntry {
   name: string;
@@ -20,16 +19,12 @@ interface searchEntry {
 
 export default function MainPage() {
   const navigate = useNavigate();
-
   const [inputValue, setInputValue] = useState<string>("");
-
   const [artistData, setArtistData] = useState<readonly searchEntry[]>([]);
-
   const [currentID, setCurrentID] = useState<string | null>(null);
 
   const onSubmit = () => {
-    if (currentID) 
-      navigate("/artist/" + currentID);
+    if (currentID) navigate("/artist/" + currentID);
   };
 
   const searchArtists = (text: string | null) => {
@@ -42,8 +37,8 @@ export default function MainPage() {
       for (let i = 0; i < 5; i++) {
         let artist = res.data.artists.items[i];
         newArtistData.push({
-          name: artist.name,
-          img: artist.images[0].url,
+          name: artist?.name,
+          img: artist?.images[0]?.url,
           follower: artist.followers.total,
         });
       }
@@ -51,8 +46,8 @@ export default function MainPage() {
     });
   };
 
-  fetchAristTop5Songs("7dGJo4pcD2V6oG8kP0tJRR").then((res: any) => {
-    console.log(res)
+  fetchArtistMonthlyStreams("06HL4z0CvFAxyc27GXpf02").then((res) => {
+    console.log(res);
   })
 
   return (
@@ -101,9 +96,7 @@ export default function MainPage() {
                   alt=""
                 />
                 <Grid container justifyContent="flex-start">
-                  <Typography sx={{ color: "grey" }}>
-                    {option.name}
-                  </Typography>
+                  <Typography sx={{ color: "grey" }}>{option.name}</Typography>
                 </Grid>
                 <Grid container justifyContent="flex-end">
                   <Typography sx={{ color: "grey" }}>
@@ -113,25 +106,23 @@ export default function MainPage() {
               </Box>
             )}
             renderInput={(params) => (
-              <>
                 <TextField
                   {...params}
                   variant="outlined"
                   placeholder="Künstlername"
                 />
-                <IconButton edge="end" color="primary">
-                  <Button
-                    variant="contained"
-                    onClick={() => onSubmit()}
-                    disableElevation
-                  >
-                    Los gehts
-                  </Button>
-                </IconButton>
-              </>
             )}
           />
         </Typography>
+        <IconButton edge="end" color="primary">
+          <Button
+            variant="contained"
+            onClick={() => onSubmit()}
+            disableElevation
+          >
+            Los gehts
+          </Button>
+        </IconButton>
       </Container>
       <Box sx={{ width: "100%", backgroundColor: "#141414" }}>
         <Steps />
