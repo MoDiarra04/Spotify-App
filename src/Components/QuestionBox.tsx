@@ -130,7 +130,7 @@ export const QuestionBox = () => {
         </Accordion>
         <Typography sx={{ p: 2, color: "text.secondary" }}>
           Hast du noch offene Fragen? Dann lies unsere{" "}
-          <Link color="inherit" href="https://PlatzhalterName.com/">
+          <Link color="inherit" href="https://AudioAtlas.com/">
             FAQ
           </Link>{" "}
         </Typography>

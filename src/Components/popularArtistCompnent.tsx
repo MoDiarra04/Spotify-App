@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Box } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
 import { Artist } from "../Utils/artist";
 import { fetchTop50Artists } from "../Utils/fetch";
 
@@ -15,6 +15,10 @@ export const PopularAristComponent = () => {
     });
   }, []);
 
+  artistData.sort((a, b) => {
+    return parseInt(b.monthlyStreams) - parseInt(a.monthlyStreams);
+  });
+
   const ArtistCard = (props: { artist: Artist; index: number }) => {
     return (
       <Card sx={{ maxWidth: 350 }}>
@@ -26,7 +30,7 @@ export const PopularAristComponent = () => {
         <CardContent>
           <Box
             sx={{
-              display:"flex",
+              display: "flex",
               justifyContent: "center",
               border: "1px solid #1DB954",
               borderRadius: "50%",
@@ -63,7 +67,8 @@ export const PopularAristComponent = () => {
   return (
     <Container maxWidth="xl">
       <Typography gutterBottom variant="h3" component="div">
-        Die 50 beliebtesten Künstler auf <Box sx={{ color: "#1DB954" }}>Spotify</Box>
+        Die 50 beliebtesten Künstler auf{" "}
+        <Box sx={{ color: "#1DB954" }}>Spotify</Box>
       </Typography>
       <Grid sx={{ pt: 3 }} container direction={"row"} spacing={4}>
         {artistData.map((artist, index) => (
