@@ -16,12 +16,15 @@ import MainPage from "./MainPage";
 import Impressum from "./Impessum";
 import ArtistComponent from "./ArtistComponent";
 import PopularAristComponent from "./popularArtistCompnent";
+import ArtistRevenue from "./ArtistRevenue";
+import Faq from "./Faq";
+import About from "./About";
 
 const pages = [
   { name: "Beliebteste Artists", page: "most-popular-artists-100" },
-  { name: "Artists mit höchsten Einkommen", page: "most-popular-artists-100" },
-  { name: "FAQ", page: "most-popular-artists-100" },
-  { name: "Über uns", page: "most-popular-artists-100" },
+  { name: "Artists mit höchsten Einkommen", page: "artist-revenue" },
+  { name: "FAQ", page: "faq" },
+  { name: "Über uns", page: "about-us" },
 ];
 
 interface Props {
@@ -186,9 +189,10 @@ function ResponsiveAppBar() {
           <Route index element={<MainPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/most-popular-artists-100" element={<PopularAristComponent />} />
+          <Route path="/artist-revenue" element={<ArtistRevenue />} />
+          <Route path="/faq" element={<Faq />} />
           <Route path="/artist/:id" element={<ArtistComponent />} />
-          <Route path="/impressum" element={<Impressum />} />
-          <Route path="/top100" element={<Impressum />} />
+          <Route path="/about-us" element={<About />} />
         </Routes>
         <StickyFooter />
       </Box>

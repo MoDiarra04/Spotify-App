@@ -10,6 +10,7 @@ import Reviews from "./Reviews";
 import Steps from "./Steps";
 import "../App.css";
 import { fetchArtistMonthlyStreams, searchArtistByName } from "../Utils/fetch";
+import Animation from "./Animation";
 
 interface searchEntry {
   name: string;
@@ -123,6 +124,7 @@ export default function MainPage() {
             Los gehts
           </Button>
         </IconButton>
+        <Animation/>
       </Container>
       <Box sx={{ width: "100%", backgroundColor: "#141414" }}>
         <Steps />

@@ -68,6 +68,21 @@ export const getArtist = async (id: string) => {
   }
 };
 
+export const getSong = async (input: string) => {
+  const access_token = await getAuth();
+  const api_url = `https://api.spotify.com/v1/search?q=${input}&type=track&market=DE&limit=1`;
+  try {
+    const response = await axios.get(api_url, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response.data.tracks.items[0];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchArtistMonthlyStreams = async (id: string) => {
   const res = await fetch(
     "https://proxy.cors.sh/https://open.spotify.com/intl-de/artist/" + id,
@@ -158,3 +173,5 @@ const checkResponse = (response: Response) => {
     throw new Error("Failed to fetch data");
   }
 };
+
+

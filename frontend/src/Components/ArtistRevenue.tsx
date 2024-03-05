@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export const PopularAristComponent = () => {
+export const ArtistRevenue = () => {
   const navigate = useNavigate();
 
   const [value, setValue] = React.useState('month');
@@ -57,7 +57,7 @@ export const PopularAristComponent = () => {
             {props.artist.name}
           </Typography>
           <Typography gutterBottom variant="body1" color="text.secondary">
-            Monatliche Streams: {props.artist.monthlyStreams}
+            Monatliches Einkommen: {props.artist.monthlyStreams}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {props.artist.description}Das ist eine Beschreibung
@@ -79,7 +79,7 @@ export const PopularAristComponent = () => {
   return (
     <Container maxWidth="xl">
       <Typography gutterBottom variant="h3" component="div">
-        Die 50 beliebtesten Künstler auf{" "}
+        Die 50 bestverdienenden Künstler auf{" "}
         <Box sx={{ color: "#1DB954" }}>Spotify</Box>
       </Typography>
       <FormControl>
@@ -93,7 +93,6 @@ export const PopularAristComponent = () => {
         >
           <FormControlLabel value="month" control={<Radio />} label="Monat" />
           <FormControlLabel value="year" control={<Radio />} label="Jahr" />
-          <FormControlLabel value="all" control={<Radio />} label="Insgesamt" />
         </RadioGroup>
       </FormControl>
       <Grid sx={{ pt: 3 }} container direction={"row"} spacing={4}>
@@ -107,4 +106,4 @@ export const PopularAristComponent = () => {
   );
 };
 
-export default PopularAristComponent;
+export default ArtistRevenue;
