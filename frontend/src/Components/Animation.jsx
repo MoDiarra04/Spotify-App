@@ -17,18 +17,14 @@ function Animation() {
         let image = imgArray[imageIndex];
         const attr = document.getElementById("moving-image");
         attr.scr = image;
-        // update the img index to state
         setImageIndex((imageIndex) =>
           imageIndex === maxImgArray ? 0 : imageIndex + 1
         );
-        // update the src in state.
         setImage(attr.scr);
-      }, 3000);
+      }, 4000);
     }
-    // When our code runs and reruns for every render, useEffect also cleans up after itself using the cleanup function.
-    // Here we clear the interval to remove the effects that could happen with state change while interval.
     return () => clearInterval(interval);
-  }, [image, imageIndex]); // when image, imageIndex gets change, useEffect will be triggered.
+  }, [image, imageIndex]); 
   return (
     <motion.div
       key={image}
@@ -40,7 +36,6 @@ function Animation() {
         default: { duration: 2 }
       }}
     >
-      {/* when {image} value change, this component will re-render with new src */}
       <img src={image} id="moving-image"></img>
     </motion.div>
   )

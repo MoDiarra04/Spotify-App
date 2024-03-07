@@ -13,7 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 export const PopularAristComponent = () => {
   const navigate = useNavigate();
 
-  const [value, setValue] = React.useState('month');
+  const [value, setValue] = React.useState('Monatliche');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -57,7 +57,7 @@ export const PopularAristComponent = () => {
             {props.artist.name}
           </Typography>
           <Typography gutterBottom variant="body1" color="text.secondary">
-            Monatliche Streams: {props.artist.monthlyStreams}
+            {value + " Streams" }
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {props.artist.description}Das ist eine Beschreibung
@@ -91,9 +91,9 @@ export const PopularAristComponent = () => {
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel value="month" control={<Radio />} label="Monat" />
-          <FormControlLabel value="year" control={<Radio />} label="Jahr" />
-          <FormControlLabel value="all" control={<Radio />} label="Insgesamt" />
+          <FormControlLabel value="Monatliche" control={<Radio />} label="Monat" />
+          <FormControlLabel value="Jährliche" control={<Radio />} label="Jahr" />
+          <FormControlLabel value="Insgesamte" control={<Radio />} label="Insgesamt" />
         </RadioGroup>
       </FormControl>
       <Grid sx={{ pt: 3 }} container direction={"row"} spacing={4}>

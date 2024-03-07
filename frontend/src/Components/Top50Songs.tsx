@@ -1,6 +1,6 @@
 import React from 'react'
 
-function About() {
+function Top50Songs() {
   return (
     <div>
       hi
@@ -8,4 +8,4 @@ function About() {
   )
 }
 
-export default About
+export default Top50Songs

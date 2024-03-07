@@ -13,7 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 export const ArtistRevenue = () => {
   const navigate = useNavigate();
 
-  const [value, setValue] = React.useState('month');
+  const [value, setValue] = React.useState('Monatliches');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -57,7 +57,7 @@ export const ArtistRevenue = () => {
             {props.artist.name}
           </Typography>
           <Typography gutterBottom variant="body1" color="text.secondary">
-            Monatliches Einkommen: {props.artist.monthlyStreams}
+            {value + " Einkommen"}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {props.artist.description}Das ist eine Beschreibung
@@ -91,8 +91,8 @@ export const ArtistRevenue = () => {
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel value="month" control={<Radio />} label="Monat" />
-          <FormControlLabel value="year" control={<Radio />} label="Jahr" />
+          <FormControlLabel value="Monatliches" control={<Radio />} label="Monat" />
+          <FormControlLabel value="Jährliches" control={<Radio />} label="Jahr" />
         </RadioGroup>
       </FormControl>
       <Grid sx={{ pt: 3 }} container direction={"row"} spacing={4}>
