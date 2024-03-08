@@ -3,14 +3,15 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Typography } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 
 function Faq() {
   return (
     <div>
       <Typography gutterBottom variant="h3" component="div">
-        Faq
+        Frequently asked Questions (FAQ)
       </Typography>
+      <Container maxWidth="lg">
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -107,6 +108,7 @@ function Faq() {
           Derzeit bieten wir keine speziellen Dienstleistungen für Künstler oder Labels an, aber wir sind offen für Partnerschaften und Kooperationen. Bitte kontaktieren Sie uns, um weitere Informationen zu erhalten.
         </AccordionDetails>
       </Accordion>
+      </Container>
     </div>
   );
 }
