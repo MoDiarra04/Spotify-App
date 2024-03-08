@@ -3,6 +3,7 @@ import ResponsiveAppBar from "./Components/AppBar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
   const Theme = createTheme({
@@ -18,6 +19,10 @@ function App() {
       fontSize: 16,
     },
   });
+
+  useEffect(() => {
+    document.title = "AudioAtlas"
+ }, []);
 
   return (
     <BrowserRouter>
