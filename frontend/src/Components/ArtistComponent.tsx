@@ -15,6 +15,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import { Artist,song } from '../Utils/artist';
 
 interface TableType {
   album: string,
@@ -34,9 +35,9 @@ const style = {
 
 export const ArtistComponent = () => {
   const { id } = useParams();
-  const [artist, setArtist] = useState<any>()
-  const [topTrack, setTopTrack] = useState<any>()
-  const [top5songs, setTop5Songs] = useState<any>()
+  const [artist, setArtist] = useState<Artist>()
+  const [topTrack, setTopTrack] = useState<Array<song>>()
+  const [top5songs, setTop5Songs] = useState<song>()
 
   useEffect(() => {
     if (id !== undefined) {
@@ -53,8 +54,8 @@ export const ArtistComponent = () => {
   }, [])
 
   useEffect(() => {
-    console.log(top5songs)
-  }, [top5songs])
+    console.log(artist)
+  }, [artist])
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -63,7 +64,7 @@ export const ArtistComponent = () => {
   const [row, setRow] = useState<Array<TableType>>([])
   useEffect(() => {
     if (topTrack !== undefined)
-      setRow(topTrack.tracks.map((item: any) => {
+      setRow(topTrack.map((item: any) => {
         return { album: item.album.name, song: item.name }
       }))
   }, [topTrack])
@@ -159,7 +160,7 @@ export const ArtistComponent = () => {
             {top5songs ? top5songs?.name : ''}
           </Grid>
         </Grid>
-        <TableContainer component={Paper} sx={{ width: '800px' }}>
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>

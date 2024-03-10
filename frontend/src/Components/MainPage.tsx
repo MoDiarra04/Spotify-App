@@ -51,6 +51,19 @@ export default function MainPage() {
     console.log(res);
   })
 
+  // fakeArtist
+  const fakeArtist = {
+    id: '92339393',
+    name: 'Taylor Swift',
+    description: 'Hallo hier bin ich',
+    monthlyStreams: '376236',
+    popularity: 99,
+    images:[{url:''},{url:''},{url:''}],
+    followers:{
+        total:'7237237'
+    },
+    genres:['pop']
+  }
   return (
     <Box
       sx={{
@@ -124,7 +137,6 @@ export default function MainPage() {
             Los gehts
           </Button>
         </IconButton>
-        <Animation/>
       </Container>
       <Box sx={{ width: "100%", backgroundColor: "#141414" }}>
         <Steps />
@@ -132,7 +144,7 @@ export default function MainPage() {
       <Container component="main" sx={{ mt: 8, mb: 8 }} maxWidth="md">
         <QuestionBox />
       </Container>
-      <Reviews />
+      <Reviews artist = {fakeArtist}/>
     </Box>
   );
 }

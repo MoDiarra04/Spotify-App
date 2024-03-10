@@ -32,7 +32,7 @@ export const getArtist_TopTracks = async (id: string) => {
         Authorization: `Bearer ${access_token}`,
       },
     });
-    return response.data;
+    return response.data.tracks;
   } catch (error) {
     console.log(error);
   }
