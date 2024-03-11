@@ -1,5 +1,3 @@
-import { error } from "console";
-
 //average earning per 1000 streams
 const worldwideAverage = 3.31
 const europeAverage = 2.38

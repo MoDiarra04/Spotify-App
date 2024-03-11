@@ -47,10 +47,6 @@ export default function MainPage() {
     });
   };
 
-  fetchArtistMonthlyStreams("06HL4z0CvFAxyc27GXpf02").then((res) => {
-    console.log(res);
-  })
-
   // fakeArtist
   const fakeArtist = {
     id: '92339393',
@@ -144,7 +140,7 @@ export default function MainPage() {
       <Container component="main" sx={{ mt: 8, mb: 8 }} maxWidth="md">
         <QuestionBox />
       </Container>
-      <Reviews artist = {fakeArtist}/>
+      <Reviews artist={fakeArtist}/>
     </Box>
   );
 }

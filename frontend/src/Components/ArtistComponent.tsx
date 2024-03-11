@@ -85,7 +85,7 @@ export const ArtistComponent = () => {
       >
         <Box sx={{ height: '320px' }}>
           <Button onClick={handleOpen}>
-            <img style={{ borderRadius: '170px' }} src={artist ? artist?.images[1].url : ""} alt="" />
+            <img style={{ borderRadius: '170px' }} src={artist?.images ? artist?.images[1].url : ""} alt="" />
           </Button>
         </Box>
         <Modal
@@ -103,7 +103,7 @@ export const ArtistComponent = () => {
         >
           <Fade in={open}>
             <Box sx={style}>
-              <img src={artist ? artist?.images[1].url : ""} alt="" />
+              <img src={artist?.images ? artist?.images[1].url : ""} alt="" />
             </Box>
           </Fade>
         </Modal>
@@ -123,7 +123,7 @@ export const ArtistComponent = () => {
               </Tooltip>
             </Grid>
             <Grid item xs={8}>
-              {artist ? artist?.followers.total : ""}
+              {artist ? artist?.followers?.total : ""}
             </Grid>
             <Grid item xs={4}>
               <Tooltip title='Popularity' placement="left">
@@ -139,7 +139,7 @@ export const ArtistComponent = () => {
               </Tooltip>
             </Grid>
             <Grid item xs={8}>
-              {artist ? artist?.genres[0] : ""}
+              {artist?.genres ? artist?.genres[0] : ""}
             </Grid>
           </Grid>
         </Box>
@@ -154,7 +154,7 @@ export const ArtistComponent = () => {
             1
           </Grid>
           <Grid item>
-            <img src={top5songs ? top5songs?.album.images[2].url : ''} alt="" />
+            <img src={top5songs ? top5songs?.album?.images[2].url : ''} alt="" />
           </Grid>
           <Grid item>
             {top5songs ? top5songs?.name : ''}

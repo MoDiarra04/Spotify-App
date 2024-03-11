@@ -8,7 +8,7 @@ import {CardActions,Button, } from '@mui/material';
 import { Artist } from '../Utils/artist';
 import { useNavigate } from "react-router-dom";
 
-function Reviews(props: { artist: Artist }) {
+function Reviews(props: { artist: any }) {
 
   const navigate = useNavigate();
 
