@@ -20,10 +20,6 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    document.title = "AudioAtlas"
- }, []);
-
   return (
     <BrowserRouter>
       <ThemeProvider theme={Theme}>

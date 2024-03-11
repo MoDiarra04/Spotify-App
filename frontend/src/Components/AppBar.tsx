@@ -1,23 +1,28 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Menu from "@mui/material/Menu";
-import AppBar from "@mui/material/AppBar";
-import Button from "@mui/material/Button";
-import Toolbar from "@mui/material/Toolbar";
-import MenuItem from "@mui/material/MenuItem";
+import { cloneElement, useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-
-import StickyFooter from "./Footer";
-import MainPage from "./MainPage";
-import Impressum from "./Impessum";
 import ArtistComponent from "./ArtistComponent";
-import PopularAristComponent from "./popularArtistCompnent";
 import ArtistRevenue from "./ArtistRevenue";
 import Faq from "./Faq";
+import StickyFooter from "./Footer";
+import Impressum from "./Impessum";
+import MainPage from "./MainPage";
+import PopularAristComponent from "./popularArtistCompnent";
 import Top50Songs from "./Top50Songs";
 
 const pages = [
@@ -39,20 +44,17 @@ function ElevationScroll(props: Props) {
     target: undefined,
   });
 
-  return React.cloneElement(children, {
+  return cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
 }
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -68,6 +70,25 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  //change title depending on current site
+  useEffect(() => {
+    console.log(location);
+    switch (location.pathname) {
+      case "/":
+        document.title = "ArtyStats - Suche nach einen Künstler";
+        return;
+      case "/faq":
+        document.title = "ArtyStats - FAQ";
+        return;
+      case "/most-popular-artists-100":
+        document.title = "ArtyStats - Beliebteste Artists";
+        return;
+      default:
+        document.title = "ArtyStats";
+        return;
+    }
+  }, [location]);
 
   return (
     <>
@@ -95,7 +116,7 @@ function ResponsiveAppBar() {
                   textDecoration: "none",
                 }}
               >
-                AudioAtlas
+                ArtyStats
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -156,7 +177,7 @@ function ResponsiveAppBar() {
                   textDecoration: "none",
                 }}
               >
-                AudioAtlas
+                ArtyStats
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
@@ -188,7 +209,10 @@ function ResponsiveAppBar() {
         <Routes>
           <Route index element={<MainPage />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="/most-popular-artists-100" element={<PopularAristComponent />} />
+          <Route
+            path="/most-popular-artists-100"
+            element={<PopularAristComponent />}
+          />
           <Route path="/artist-revenue" element={<ArtistRevenue />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/artist/:id" element={<ArtistComponent />} />
