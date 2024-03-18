@@ -23,7 +23,7 @@ export const QuestionBox = () => {
   };
 
   return (
-    <div>
+    <>
       <Typography sx={{ mb: 5 }} variant="h4" component="h2">
         Alles über uns
       </Typography>
@@ -137,12 +137,12 @@ export const QuestionBox = () => {
         </Accordion>
         <Typography sx={{ p: 2, color: "text.secondary" }}>
           Hast du noch offene Fragen? Dann lies unsere{" "}
-          <Link color="inherit" href="https://ArtyStats.com/">
+          <Link color="inherit" href="https://Artystats.de/faq">
             FAQ
           </Link>{" "}
         </Typography>
       </Box>
-    </div>
+    </>
   );
 };
 

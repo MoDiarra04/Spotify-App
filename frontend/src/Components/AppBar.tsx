@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import ArtistComponent from "./ArtistComponent";
 import ArtistRevenue from "./ArtistRevenue";
-import Faq from "./Faq";
+import FAQComponent from "./FAQComponent";
 import StickyFooter from "./Footer";
 import Impressum from "./Impessum";
 import MainPage from "./MainPage";
@@ -104,7 +104,7 @@ function ResponsiveAppBar() {
           >
             <Toolbar disableGutters>
               <Typography
-                variant="h6"
+                variant="h5"
                 noWrap
                 component="a"
                 href="/"
@@ -214,7 +214,8 @@ function ResponsiveAppBar() {
             element={<PopularAristComponent />}
           />
           <Route path="/artist-revenue" element={<ArtistRevenue />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/faq" element={<FAQComponent />} />
+          <Route path="/impressum" element={<Impressum />} />
           <Route path="/artist/:id" element={<ArtistComponent />} />
           <Route path="/most-streamed-songs" element={<Top50Songs />} />
         </Routes>

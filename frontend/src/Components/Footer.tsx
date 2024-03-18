@@ -8,8 +8,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        ArtyStats.com
+      <Link color="inherit" href="https://artystats.de/">
+        ArtyStats.de
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -99,7 +99,7 @@ export default function StickyFooter() {
               color="text.secondary"
             >
               <Grid item xs={2}>
-                <Link color="inherit" underline="none" href="/most-popular-artists-100">
+                <Link color="inherit" underline="none" href="/faq">
                   FAQ
                 </Link>
               </Grid>

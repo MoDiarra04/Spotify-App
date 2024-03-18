@@ -140,7 +140,7 @@ export default function MainPage() {
       <Container component="main" sx={{ mt: 8, mb: 8 }} maxWidth="md">
         <QuestionBox />
       </Container>
-      <Reviews artist={fakeArtist}/>
+      <Reviews/>
     </Box>
   );
 }
