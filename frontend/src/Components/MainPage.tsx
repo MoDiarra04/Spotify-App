@@ -75,7 +75,7 @@ export default function MainPage() {
         maxWidth="md"
       >
         <Typography variant="h3" component="h1" gutterBottom>
-          Suche nach einen Künstler
+          Suche nach einem Künstler
         </Typography>
 
         <Typography variant="h3">

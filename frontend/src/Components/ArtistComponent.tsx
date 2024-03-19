@@ -1,34 +1,21 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import {
-  Tooltip,
-  Typography,
-  Container,
-  Stack,
-  Grid,
-  Link,
-  Modal,
-  Fade,
-  Button,
-  Backdrop,
-} from "@mui/material";
-import { getArtist, getArtist_TopTracks, getSong } from "../Utils/fetch";
 import { useEffect, useState } from "react";
-import { Box } from "@mui/system";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { useParams } from "react-router-dom";
 import AlbumIcon from "@mui/icons-material/Album";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { Backdrop, Button, Container, Fade, Grid, Modal, Stack, Tooltip, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
+import { Box } from "@mui/system";
 import { Artist, song } from "../Utils/artist";
-import { LineChart } from "@mui/x-charts/LineChart";
-import { FollowTheSignsRounded } from "@mui/icons-material";
+import { getArtist, getArtist_TopTracks, getSong } from "../Utils/fetch";
+import { FollowerChart, StreamChart } from "./ChartComponents";
 
 interface TableType {
   album: string;
@@ -51,8 +38,7 @@ export const ArtistComponent = () => {
   const [artist, setArtist] = useState<Artist>();
   const [topTrack, setTopTrack] = useState<Array<song>>();
   const [top5songs, setTop5Songs] = useState<song>();
-  const [chartData, setChartData] = useState<number[]>([]);
-  const [chartDates, setChartDates] = useState<number[]>([]);
+
 
   useEffect(() => {
     if (id) {
@@ -86,33 +72,8 @@ export const ArtistComponent = () => {
       );
   }, [topTrack]);
 
-  useEffect(() => {
-    if (!artist?.followers?.total) return;
-
-    let newData: number[] = [parseInt(artist.followers.total)];
-    for (let i = 1; i < 180; i++) {
-      let random = Math.floor(Math.random() * (101.5 - 99)) + 99;
-      newData.push((newData[newData.length - 1] * random) / 100);
-    }
-    setChartData(newData);
-  }, [artist?.followers?.total, setChartData]);
-
-  useEffect(() => {
-    let newData: number[] = [];
-    for (let i = 1; i <= 180; i++) {
-      newData.push(i);
-    }
-    setChartDates(newData);
-  }, []);
-
-  const getDay = (days: number) => {
-    var date = new Date();
-    date.setDate(date.getDate() - days);
-    return date.toLocaleDateString("de-DE");
-}
-
   return (
-    <Container maxWidth="xl">
+    <>
       <Typography variant="h2" textAlign="center">
         {artist ? artist?.name : ""}
       </Typography>
@@ -199,27 +160,15 @@ export const ArtistComponent = () => {
           </Grid>
         </Box>
       </Stack>
-      <LineChart
-          xAxis={[
-            {
-              id: "Datum",
-              data: chartDates,
-              valueFormatter: (value) => getDay(value),
-              reverse: true,
-            },
-          ]}
-          series={[
-            {
-              label: "Follower auf Spotify",
-              data: chartData,
-              area: true,
-              color: "#1DB954",
-              showMark: false,
-            },
-          ]}
-          height={300}
-        />
-      <Stack marginTop="50px" alignItems="center">
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={4}>
+              {artist?.followers?.total &&
+                <FollowerChart follower={parseInt(artist?.followers?.total)} />
+              }
+              {artist?.followers?.total &&
+                <StreamChart streams={parseInt(artist?.followers?.total)} />
+              }
+        </Stack>
+      <Stack marginTop="50px" alignItems="center" sx={{ px: 2}} >
         <Grid container spacing={6} fontSize="25px" justifyContent="center">
           <Grid item>1</Grid>
           <Grid item>
@@ -231,11 +180,11 @@ export const ArtistComponent = () => {
           <Grid item>{top5songs ? top5songs?.name : ""}</Grid>
         </Grid>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Album</TableCell>
-                <TableCell align="right">Hit</TableCell>
+                <TableCell>Songname</TableCell>
+                <TableCell align="right">Album</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -245,16 +194,16 @@ export const ArtistComponent = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {item.album}
+                    {item.song}
                   </TableCell>
-                  <TableCell align="right">{item.song}</TableCell>
+                  <TableCell align="right">{item.album}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Stack>
-    </Container>
+    </>
   );
 };
 

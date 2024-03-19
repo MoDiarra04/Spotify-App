@@ -76,7 +76,7 @@ function ResponsiveAppBar() {
     console.log(location);
     switch (location.pathname) {
       case "/":
-        document.title = "ArtyStats - Suche nach einen Künstler";
+        document.title = "ArtyStats - Suche nach einem Künstler";
         return;
       case "/faq":
         document.title = "ArtyStats - FAQ";
