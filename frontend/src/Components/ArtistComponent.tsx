@@ -73,7 +73,7 @@ export const ArtistComponent = () => {
   }, [topTrack]);
 
   return (
-    <>
+    <Box sx={{ px: 2}}>
       <Typography variant="h2" textAlign="center">
         {artist ? artist?.name : ""}
       </Typography>
@@ -168,7 +168,7 @@ export const ArtistComponent = () => {
                 <StreamChart streams={parseInt(artist?.followers?.total)} />
               }
         </Stack>
-      <Stack marginTop="50px" alignItems="center" sx={{ px: 2}} >
+      <Stack marginTop="50px" alignItems="center" >
         <Grid container spacing={6} fontSize="25px" justifyContent="center">
           <Grid item>1</Grid>
           <Grid item>
@@ -203,7 +203,7 @@ export const ArtistComponent = () => {
           </Table>
         </TableContainer>
       </Stack>
-    </>
+    </Box>
   );
 };
 
