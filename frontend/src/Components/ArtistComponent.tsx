@@ -73,7 +73,7 @@ export const ArtistComponent = () => {
   }, [topTrack]);
 
   return (
-    <Box sx={{ px: 2}}>
+    <Box px={{xs:0, sm:0, md:3}}>
       <Typography variant="h2" textAlign="center">
         {artist ? artist?.name : ""}
       </Typography>

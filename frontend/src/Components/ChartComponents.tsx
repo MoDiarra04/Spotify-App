@@ -46,7 +46,7 @@ export const FollowerChart = (props: FollowerChartProps) => {
       Follower auf Spotify
       </Typography>
       <LineChart
-        sx={{ color: "red", m: 1 }}
+        sx={{ color: "red", m: 2 }}
         xAxis={[
           {
             id: "Datum",
@@ -99,7 +99,7 @@ export const StreamChart = (props: StreamChartProps) => {
       Streams auf Spotify
       </Typography>
       <LineChart
-        sx={{ color: "red", m: 1 }}
+        sx={{ color: "red", m: 2 }}
         xAxis={[
           {
             id: "Datum",
