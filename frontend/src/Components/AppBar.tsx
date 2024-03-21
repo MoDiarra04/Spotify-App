@@ -23,7 +23,7 @@ import StickyFooter from "./Footer";
 import Impressum from "./Impessum";
 import MainPage from "./MainPage";
 import PopularAristComponent from "./popularArtistCompnent";
-import Top50Songs from "./Top50Songs";
+import Top20Songs from "./Top20Songs";
 
 const pages = [
   { name: "Beliebteste Artists", page: "most-popular-artists-100" },
@@ -193,14 +193,6 @@ function ResponsiveAppBar() {
                   </Button>
                 ))}
               </Box>
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: "block" }}
-              >
-                Loslegen
-              </Button>
             </Toolbar>
           </Box>
         </AppBar>
@@ -217,7 +209,7 @@ function ResponsiveAppBar() {
           <Route path="/faq" element={<FAQComponent />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/artist/:id" element={<ArtistComponent />} />
-          <Route path="/most-streamed-songs" element={<Top50Songs />} />
+          <Route path="/most-streamed-songs" element={<Top20Songs />} />
         </Routes>
         <StickyFooter />
       </Box>
